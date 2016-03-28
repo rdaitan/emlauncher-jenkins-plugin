@@ -23,6 +23,8 @@ import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.kohsuke.stapler.StaplerRequest;
+import slack.IncomingWebhook;
+import slack.MessageFormatter;
 
 public class TestflightRecorder extends Recorder {
     private String hostTokenPairName;
@@ -152,9 +154,31 @@ public class TestflightRecorder extends Recorder {
     public TestflightTeam [] getAdditionalTeams() {
         return this.additionalTeams;
     }
+
+    private boolean isPostToSlack;
+
+    public boolean getIsPostToSlack() {
+        return isPostToSlack;
+    }
+
+    private String slackWebhookUrl;
+
+    public String getSlackWebhookUrl() {
+        return slackWebhookUrl;
+    }
+
+    private String slackChannel;
+
+    public String getSlackChannel() {
+        return slackChannel;
+    }
     
     @DataBoundConstructor
-    public TestflightRecorder(String hostTokenPairName, String apiHost, Secret apiToken, boolean sslEnable, Boolean notifyTeam, String title, String description, String tags, Boolean appendChangelog, String filePath, String dsymPath, String proxyHost, String proxyUser, String proxyPass, int proxyPort, int timeout, Boolean debug, TestflightTeam [] additionalTeams) {
+    public TestflightRecorder(String hostTokenPairName, String apiHost, Secret apiToken, boolean sslEnable,
+                              Boolean notifyTeam, String title, String description, String tags, Boolean appendChangelog,
+                              String filePath, String dsymPath, String proxyHost, String proxyUser, String proxyPass,
+                              int proxyPort, int timeout, Boolean debug, TestflightTeam [] additionalTeams,
+                              boolean isPostToSlack, String slackWebhookUrl, String slackChannel) {
         this.hostTokenPairName = hostTokenPairName;
         this.apiHost = apiHost;
         this.apiToken = apiToken;
@@ -173,6 +197,9 @@ public class TestflightRecorder extends Recorder {
         this.timeout = timeout;
         this.debug = debug;
         this.additionalTeams = additionalTeams;
+        this.isPostToSlack = isPostToSlack;
+        this.slackWebhookUrl = slackWebhookUrl;
+        this.slackChannel = slackChannel;
     }
 
     @Override
@@ -228,6 +255,19 @@ public class TestflightRecorder extends Recorder {
                 }
                 for (Map parsedMap: parsedMaps) {
                     addTestflightLinks(build, listener, parsedMap);
+
+                    // Add a key to the EMLauncher host
+                    parsedMap.put("eml_host", getHostTokenPair(hostTokenPairName).getApiHost());
+                }
+
+                // Post to Slack
+                if (isPostToSlack) {
+                    IncomingWebhook webhook = new IncomingWebhook(slackWebhookUrl);
+                    webhook.channel(slackChannel)
+                        .iconEmoji(parsedMaps.get(0).get("platform").toString())
+                        .username(vars.get("JOB_NAME"))
+                        .message(MessageFormatter.format(parsedMaps))
+                        .send();
                 }
             }
         } catch (Throwable e) {
