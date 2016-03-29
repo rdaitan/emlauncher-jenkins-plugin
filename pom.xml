@@ -22,12 +22,12 @@
   </repositories>
 
   <scm>
-      <connection>scm:git:ssh://git@github.com:KLab/emlauncher-jenkins-plugin.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com:KLab/emlauncher_jenkins_plugin.git</developerConnection>
-    <url>https://github.com/KLab/emlauncher-jenkins-plugin</url>
+      <connection>scm:git:ssh://git@github.com:rdaitan/emlauncher-jenkins-plugin.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:rdaitan/emlauncher-jenkins-plugin.git</developerConnection>
+    <url>https://github.com/rdaitan/emlauncher-jenkins-plugin.git</url>
   </scm>
 
-  <url>https://github.com/KLab/emlauncher-jenkins-plugin</url>
+  <url>https://github.com/rdaitan/emlauncher-jenkins-plugin.git</url>
 
 
   <developers>
@@ -35,6 +35,11 @@
       <id>oho-s</id>
       <name>Suguru Oho</name>
       <email>oho-s@klab.com</email>
+    </developer>
+    <developer>
+      <id>rdaitan</id>
+      <name>R Daitan</name>
+      <email>r.daitan@klab.com</email>
     </developer>
   </developers>
   <pluginRepositories>

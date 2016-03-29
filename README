@@ -1,6 +1,7 @@
-This is EMLauncher Jenkins Plugin.
+# EMLauncher Jenkins Plugin
+... with **Slack** integration
 
-Based on TestFlight Plugin (https://github.com/jenkinsci/testflight-plugin).
+This is a fork of the (https://github.com/KLab/emlauncher-jenkins-plugin)[EMLauncher Jenkins Plugin].
 
 Build
 Need Maven, JDK
@@ -10,4 +11,3 @@ Need Maven, JDK
 
 In Jenkins General Settings, Setting EMLauncher Server configuration.
 And In your Build configuration, Add EMLauncher Plugin to post build process and set some parameter.
-
