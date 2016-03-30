@@ -7,10 +7,10 @@
   </parent>
 
   <groupId>org.jenkins-ci.plugins</groupId>
-  <artifactId>EMLauncher</artifactId>
-  <name>EMLauncher Plugin</name>
-  <description>Uploads .ipa/.apk files to EMLauncher</description>
-  <version>1.3.10-SNAPSHOT</version>
+  <artifactId>EMLauncher-Slack</artifactId>
+  <name>EMLauncher w/ Slack Plugin</name>
+  <description>Uploads .ipa/.apk files to EMLauncher and (optionally) post to Slack</description>
+  <version>1.0</version>
   <packaging>hpi</packaging>
 
   <!-- get every artifact through maven.glassfish.org, which proxies all the artifacts that we need -->
